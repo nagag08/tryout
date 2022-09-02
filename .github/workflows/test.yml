@@ -5,6 +5,7 @@ on:
 
 env:
   REGISTRY: psemea.jfrog.io
+  IMEGE_N: "alpine-ngnix"
   IMAGE_NAME: "onagag-generic-back-dev/alpine-ngnix"
   JUSERNAME: "nagag"
 
@@ -49,6 +50,6 @@ jobs:
       - run: |
           jf rt ping
           docker images
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMAGE_NAME}} --build-number=${{ github.run_number }}
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMAGE_N}} --build-number=${{ github.run_number }}
 
 
