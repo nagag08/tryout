@@ -6,11 +6,13 @@ on:
 env:
   REGISTRY: psemea.jfrog.io
   IMEGE_N: "alpine-ngnix"
+  IMEGE_N1: "alpine-pkg1"
   IMAGE_NAME: "onagag-generic-back-dev/alpine-ngnix"
+  IMAGE_NAME1: "onagag-generic-back-dev/alpine-pkg1"
   JUSERNAME: "nagag"
 
 jobs:
-  build:
+  mainpkg:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,13 +32,23 @@ jobs:
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        id: build-and-push
+        id: build-main
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
           push: false
           load: true
           tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+      - name: Build and push Docker image
+        id: build-pkg1
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: .
+          file: pkg1/Dockerfile
+          push: false
+          load: true
+          tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+         
       - name: "print docker images"
         run: docker images
       - name: JFROG CLI
@@ -50,8 +62,11 @@ jobs:
       - run: |
           jf rt ping
           docker images
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMEGE_N}} --build-number=${{ github.run_number }}
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMEGE_N}} --build-number=${{ github.run_number }} --module main
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMEGE_N1}} --build-number=${{ github.run_number }} --module pkg1
           jf rt bag ${{github.workspace}}
           jf rt bce 
           jf rt bp 
+        
+
 
