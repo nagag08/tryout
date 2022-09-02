@@ -48,6 +48,6 @@ jobs:
   
       - run: |
           jf rt ping
-          jfrog docker push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-front-dev --build-name=${{env.IMAGE_NAME}} --build-number=${{ github.run_number }}
+          echo jfrog docker push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-front-dev --build-name=${{env.IMAGE_NAME}} --build-number=${{ github.run_number }}
 
 
