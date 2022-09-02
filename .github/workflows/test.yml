@@ -66,6 +66,7 @@ jobs:
           jf rt bag ${{github.workspace}}  --project=onagag 
           jf rt bce  --project=onagag 
           jf rt bp "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
+          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
         
 
 
