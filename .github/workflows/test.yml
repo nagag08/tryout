@@ -35,6 +35,6 @@ jobs:
           context: .
           push: false
           load: true
-          tags: ${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+          tags: env.IMAGE_NAME:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
       - name: "print docker images"
         run: docker images
