@@ -5,8 +5,7 @@ on:
 
 env:
   REGISTRY: psemea.jfrog.io
-  IMEGE_N: "alpine-ngnix"
-  IMEGE_N1: "alpine-pkg1"
+  BUILDNAME: "alpine-ngnix"
   IMAGE_NAME: "onagag-generic-back-dev/alpine-ngnix"
   IMAGE_NAME1: "onagag-generic-back-dev/alpine-pkg1"
   JUSERNAME: "nagag"
@@ -62,8 +61,8 @@ jobs:
       - run: |
           jf rt ping
           docker images
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMEGE_N}} --build-number=${{ github.run_number }} --module main
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.IMEGE_N1}} --build-number=${{ github.run_number }} --module pkg1
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.BUILDNAME}} --build-number=${{ github.run_number }} --module main
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.BUILDNAME}} --build-number=${{ github.run_number }} --module pkg1
           jf rt bag ${{github.workspace}}
           jf rt bce 
           jf rt bp 
