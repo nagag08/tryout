@@ -65,7 +65,7 @@ jobs:
           jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name=${{env.BUILDNAME}} --build-number=${{ github.run_number }} --module pkg1
           jf rt bag ${{github.workspace}}
           jf rt bce 
-          jf rt bp 
+          jf rt bp ${{env.BUILDNAME}} ${{ github.run_number }}
         
 
 
