@@ -35,7 +35,7 @@ jobs:
           context: .
           push: false
           load: true
-          tags: ${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+          tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
       - name: "print docker images"
         run: docker images
       - name: JFROG CLI
@@ -48,6 +48,6 @@ jobs:
   
       - run: |
           jf rt ping
-          jfrog docker push  ${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-front-dev--build-name=${{env.IMAGE_NAME}} --build-number=${{ github.run_number }}
+          jfrog docker push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-front-dev --build-name=${{env.IMAGE_NAME}} --build-number=${{ github.run_number }}
 
 
