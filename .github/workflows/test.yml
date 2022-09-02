@@ -38,3 +38,13 @@ jobs:
           tags: ${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
       - name: "print docker images"
         run: docker images
+      - name: JFROG CLI
+        uses: jfrog/setup-jfrog-cli@v2
+        env:
+        # JFrog platform url (for example: https://acme.jfrog.io) 
+          JF_URL: "https://psemea.jfrog.io"
+          JF_USER: "nagag"
+          JF_PASSWORD: ${{ secrets.JPASSWORD }}
+  
+      - run: |
+          jf rt ping
