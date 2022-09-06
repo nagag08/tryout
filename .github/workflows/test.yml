@@ -55,7 +55,7 @@ jobs:
         env:
         # JFrog platform url (for example: https://acme.jfrog.io) 
           JF_URL: "https://psemea.jfrog.io"
-          JF_USER: "nagag"
+          JF_USER: ${{env.JUSERNAME}}
           JF_PASSWORD: ${{ secrets.JPASSWORD }}
   
       - run: |
