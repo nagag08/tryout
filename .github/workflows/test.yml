@@ -68,7 +68,5 @@ jobs:
           jf rt bag ${{github.workspace}}  --project=${{env.PROJID}} 
           jf rt bce  --project=${{env.PROJID}} 
           jf rt bp "${{github.workflow}}" ${{ github.run_number }}  --project=${{env.PROJID}}
-          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}  --project=${{env.PROJID}} 
-        
 
 
