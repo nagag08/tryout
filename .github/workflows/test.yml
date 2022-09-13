@@ -6,10 +6,10 @@ on:
 env:
   REGISTRY: nagag-pstest.dev.gcp.devopsacc.team
   BUILDNAME: "alpine-ngnix"
-  REPONAME: "test-back-dev"
+  REPONAME: "test-back-prod"
   PROJID: "test"
-  IMAGE_NAME: "test-back-dev/alpine-ngnix"
-  IMAGE_NAME1: "test-back-dev/alpine-pkg1"
+  IMAGE_NAME: "test-back-prod/alpine-ngnix"
+  IMAGE_NAME1: "test-back-prod/alpine-pkg1"
   JUSERNAME: "proj-back-dev"
 
 jobs:
