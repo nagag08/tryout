@@ -4,11 +4,13 @@ on:
   [push]
 
 env:
-  REGISTRY: psemea.jfrog.io
+  REGISTRY: nagag-pstest.dev.gcp.devopsacc.team
   BUILDNAME: "alpine-ngnix"
-  IMAGE_NAME: "onagag-generic-back-dev/alpine-ngnix"
-  IMAGE_NAME1: "onagag-generic-back-dev/alpine-pkg1"
-  JUSERNAME: "nagag"
+  REPONAME: "test-back-dev"
+  PROJID: "test"
+  IMAGE_NAME: "test-back-dev/alpine-ngnix"
+  IMAGE_NAME1: "test-back-dev/alpine-pkg1"
+  JUSERNAME: "proj-back-dev"
 
 jobs:
   mainpkg:
@@ -54,19 +56,19 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v2
         env:
         # JFrog platform url (for example: https://acme.jfrog.io) 
-          JF_URL: "https://psemea.jfrog.io"
+          JF_URL: "https://nagag-pstest.dev.gcp.devopsacc.team/"
           JF_USER: ${{env.JUSERNAME}}
           JF_PASSWORD: ${{ secrets.JPASSWORD }}
   
       - run: |
           jf rt ping
           docker images
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name="${{github.workflow}}" --project=onagag --build-number=${{ github.run_number }} --module main
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name="${{github.workflow}}"  --project=onagag --build-number=${{ github.run_number }} --module pkg1
-          jf rt bag ${{github.workspace}}  --project=onagag 
-          jf rt bce  --project=onagag 
-          jf rt bp "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
-          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPONAME}} --build-name="${{github.workflow}}" --project=${{env.PROJID}} --build-number=${{ github.run_number }} --module main
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPONAME}} --build-name="${{github.workflow}}"  --project=${{env.PROJID}} --build-number=${{ github.run_number }} --module pkg1
+          jf rt bag ${{github.workspace}}  --project=${{env.PROJID}} 
+          jf rt bce  --project=${{env.PROJID}} 
+          jf rt bp "${{github.workflow}}" ${{ github.run_number }}  --project=${{env.PROJID}}
+          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}  --project=${{env.PROJID}} 
         
 
 
