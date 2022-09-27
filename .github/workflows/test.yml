@@ -4,11 +4,11 @@ on:
   [push]
 
 env:
-  REGISTRY: psemea.jfrog.io
+  REGISTRY: nagag-pstest.dev.gcp.devopsacc.team
   BUILDNAME: "alpine-ngnix"
-  IMAGE_NAME: "onagag-generic-back-dev/alpine-ngnix"
-  IMAGE_NAME1: "onagag-generic-back-dev/alpine-pkg1"
-  JUSERNAME: "nagag"
+  IMAGE_NAME: "docker-virt/alpine-ngnix"
+  IMAGE_NAME1: "docker-virt/alpine-pkg1"
+  JUSERNAME: "admin"
 
 jobs:
   mainpkg:
