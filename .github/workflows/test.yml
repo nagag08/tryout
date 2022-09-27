@@ -7,8 +7,9 @@ env:
   REGISTRY: nagag-pstest.dev.gcp.devopsacc.team
   JURL: "https://nagag-pstest.dev.gcp.devopsacc.team"
   BUILDNAME: "alpine-ngnix"
-  IMAGE_NAME: "docker-virt/alpine-ngnix"
-  IMAGE_NAME1: "docker-virt/alpine-pkg1"
+  REPO_NAME: "docker-virt"
+  IMAGE_NAME: "alpine-ngnix"
+  IMAGE_NAME1: "alpine-pkg1"
   JUSERNAME: "admin"
 
 jobs:
@@ -38,7 +39,7 @@ jobs:
           context: .
           push: false
           load: true
-          tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+          tags: ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
       - name: Build and push Docker image
         id: build-pkg1
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
@@ -47,7 +48,7 @@ jobs:
           file: pkg1/Dockerfile
           push: false
           load: true
-          tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
+          tags: ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }}
          
       - name: "print docker images"
         run: docker images
@@ -62,12 +63,12 @@ jobs:
       - run: |
           jf rt ping
           docker images
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name="${{github.workflow}}" --project=onagag --build-number=${{ github.run_number }} --module main
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} onagag-generic-back-dev --build-name="${{github.workflow}}"  --project=onagag --build-number=${{ github.run_number }} --module pkg1
-          jf rt bag ${{github.workspace}}  --project=onagag 
-          jf rt bce  --project=onagag 
-          jf rt bp "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
-          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}  --project=onagag 
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPO_NAME}} --build-name="${{github.workflow}}" --build-number=${{ github.run_number }} --module main
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPO_NAME}}/ --build-name="${{github.workflow}}"  --build-number=${{ github.run_number }} --module pkg1
+          jf rt bag ${{github.workspace}}  
+          jf rt bce   
+          jf rt bp "${{github.workflow}}" ${{ github.run_number }}  
+          jf rt build-scan "${{github.workflow}}" ${{ github.run_number }}   
         
 
 
