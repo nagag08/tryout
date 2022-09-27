@@ -5,6 +5,7 @@ on:
 
 env:
   REGISTRY: nagag-pstest.dev.gcp.devopsacc.team
+  JURL: "https://nagag-pstest.dev.gcp.devopsacc.team"
   BUILDNAME: "alpine-ngnix"
   IMAGE_NAME: "docker-virt/alpine-ngnix"
   IMAGE_NAME1: "docker-virt/alpine-pkg1"
@@ -54,7 +55,7 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v2
         env:
         # JFrog platform url (for example: https://acme.jfrog.io) 
-          JF_URL: "https://psemea.jfrog.io"
+          JF_URL: ${{env.JURL}}
           JF_USER: ${{env.JUSERNAME}}
           JF_PASSWORD: ${{ secrets.JPASSWORD }}
   
