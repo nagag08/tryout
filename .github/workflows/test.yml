@@ -64,7 +64,7 @@ jobs:
           jf rt ping
           docker images
           jf rt docker-push  ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPO_NAME}} --build-name="${{github.workflow}}" --build-number=${{ github.run_number }} --module main
-          jf rt docker-push  ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPO_NAME}}/ --build-name="${{github.workflow}}"  --build-number=${{ github.run_number }} --module pkg1
+          jf rt docker-push  ${{env.REGISTRY}}/${{env.REPO_NAME}}/${{env.IMAGE_NAME1}}:${{ github.run_number }}.${{ github.run_attempt }}.${{ github.run_id }} ${{env.REPO_NAME}} --build-name="${{github.workflow}}"  --build-number=${{ github.run_number }} --module pkg1
           jf rt bag ${{github.workspace}}  
           jf rt bce   
           jf rt bp "${{github.workflow}}" ${{ github.run_number }}  
